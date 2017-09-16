@@ -20,4 +20,5 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	void AimTowardsCrossAir();
+	bool GetSightRayHitLocation(FVector &OutHitLocation);
 };

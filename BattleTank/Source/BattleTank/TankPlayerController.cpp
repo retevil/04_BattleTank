@@ -1,12 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
-
+#include "Engine/World.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//Las siguientes lineas crean un puntero hacia el tanque que controla el jugador y luego comprobamos
+	//que verdaderamente el jugador controla un tanque.
 	ATank* PlayerTank = GetControlledTank();
 	if (!PlayerTank) { UE_LOG(LogTemp, Error, TEXT("There is not Tank controlled by the player")); return; }
 	UE_LOG(LogTemp, Warning, TEXT("The player controls : %s"), *PlayerTank->GetName())
@@ -21,14 +23,28 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 ATank* ATankPlayerController::GetControlledTank()
 {
+	//Aqui casteamos el componente tank del player controller y devolvemos el pawn del mismo.
 	return Cast<ATank>(GetPawn());
 }
 
 void ATankPlayerController::AimTowardsCrossAir()
 {
-	ATank* PlayerTank = GetControlledTank();
-	if (!PlayerTank){ UE_LOG(LogTemp, Error, TEXT("There is not Tank controlled by the player")); return; }
+	if (!GetControlledTank()){ UE_LOG(LogTemp, Error, TEXT("There is not Tank controlled by the player")); return; }
+
+	FVector HitLocation;
+	if (GetSightRayHitLocation(HitLocation)) 
+	{
+		
+		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		//A hacer, decir al tanque que apunte a esta localizacion.
+	}
+	
+	
 }
-
-
+//Esta funcion devuelve el punto donde la mirilla choca con el mundo o otro pawn.
+bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation)
+{
+	OutHitLocation = FVector(1.f);
+	return true;
+}
 
