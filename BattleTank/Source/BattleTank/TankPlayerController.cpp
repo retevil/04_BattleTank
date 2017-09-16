@@ -35,7 +35,7 @@ void ATankPlayerController::AimTowardsCrossAir()
 	if (GetSightRayHitLocation(HitLocation)) 
 	{
 		
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+	UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *HitLocation.ToString());
 		//A hacer, decir al tanque que apunte a esta localizacion.
 	}
 	
@@ -44,7 +44,13 @@ void ATankPlayerController::AimTowardsCrossAir()
 //Esta funcion devuelve el punto donde la mirilla choca con el mundo o otro pawn.
 bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation)
 {
-	OutHitLocation = FVector(1.f);
+	//Find the crosshair possition
+	int32 ViewPortSizeX, ViewPortSizeY;
+	GetViewportSize(ViewPortSizeX, ViewPortSizeY);
+	
+	auto ScreenLocation = FVector2D(ViewPortSizeX*CrossHairXLocation, ViewPortSizeY*CrossHairYLocation);
+	//De-project the screen position of the cursor to a world direction.
+	//Linetrace along that look direction and see what we hit.
 	return true;
 }
 
