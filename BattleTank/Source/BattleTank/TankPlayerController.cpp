@@ -1,7 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "TankPlayerController.h"
 #include "Engine/World.h"
+
+#define OUT
 
 void ATankPlayerController::BeginPlay()
 {
@@ -30,27 +33,39 @@ ATank* ATankPlayerController::GetControlledTank()
 void ATankPlayerController::AimTowardsCrossAir()
 {
 	if (!GetControlledTank()){ UE_LOG(LogTemp, Error, TEXT("There is not Tank controlled by the player")); return; }
-
 	FVector HitLocation;
+
 	if (GetSightRayHitLocation(HitLocation)) 
-	{
-		
-	UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *HitLocation.ToString());
+	{	
+	
 		//A hacer, decir al tanque que apunte a esta localizacion.
 	}
-	
-	
 }
 //Esta funcion devuelve el punto donde la mirilla choca con el mundo o otro pawn.
 bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation)
 {
 	//Find the crosshair possition
+	
 	int32 ViewPortSizeX, ViewPortSizeY;
 	GetViewportSize(ViewPortSizeX, ViewPortSizeY);
-	
 	auto ScreenLocation = FVector2D(ViewPortSizeX*CrossHairXLocation, ViewPortSizeY*CrossHairYLocation);
-	//De-project the screen position of the cursor to a world direction.
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *LookDirection.ToString());
+	}
 	//Linetrace along that look direction and see what we hit.
 	return true;
 }
 
+//De-project the screen position of the cursor to a world direction.
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation,FVector &LookDirection)
+{
+	FVector WorldLocation;
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X,
+		ScreenLocation.Y,
+		OUT WorldLocation,
+		OUT LookDirection
+	);
+}
