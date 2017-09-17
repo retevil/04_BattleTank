@@ -37,7 +37,8 @@ void ATankPlayerController::AimTowardsCrossAir()
 
 	if (GetSightRayHitLocation(HitLocation)) 
 	{	
-		PlayerTank->AimAt(HitLocation);
+		//PlayerTank->AimAt(HitLocation);
+		PlayerTank->FindComponentByClass<UTankAimingComponent>()->AimAt(HitLocation);
 	}
 }
 
