@@ -12,8 +12,8 @@ void ATankPlayerController::BeginPlay()
 	
 	//Las siguientes lineas crean un puntero hacia el tanque que controla el jugador y luego comprobamos
 	//que verdaderamente el jugador controla un tanque.
-	ATank* PlayerTank = GetControlledTank();
-	if (!PlayerTank) { UE_LOG(LogTemp, Error, TEXT("There is not Tank controlled by the player")); return; }
+	
+
 }
 
 // Called every frame
@@ -31,16 +31,16 @@ ATank* ATankPlayerController::GetControlledTank()
 
 void ATankPlayerController::AimTowardsCrossAir()
 {
-
+	ATank* PlayerTank = GetControlledTank();
+	if (!PlayerTank) { UE_LOG(LogTemp, Error, TEXT("There is not Tank controlled by the player")); return; }
 	FVector HitLocation;
 
 	if (GetSightRayHitLocation(HitLocation)) 
 	{	
-		UE_LOG(LogTemp, Warning, TEXT("is hitting %s"), *HitLocation.ToString());
-		//A hacer, decir al tanque que apunte a esta localizacion.
+		PlayerTank->AimAt(HitLocation);
 	}
 }
-//Esta funcion devuelve el punto donde la mirilla choca con el mundo o otro pawn.
+
 bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation)
 {
 	//Find the crosshair possition
@@ -49,6 +49,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation)
 	auto ScreenLocation = FVector2D(ViewPortSizeX*CrossHairXLocation, ViewPortSizeY*CrossHairYLocation);
 	
 	FVector LookDirection;
+
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		//Linetrace along that look direction and see what we hit.
@@ -58,7 +59,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &OutHitLocation)
 	return true;
 }
 
-//De-project the screen position of the cursor to a world direction.
+
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation,FVector &LookDirection)
 {
 	FVector WorldLocation;

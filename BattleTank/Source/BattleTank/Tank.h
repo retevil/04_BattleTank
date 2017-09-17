@@ -25,7 +25,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	
+	//En esta funcion le decimos a los tanques, tanto del jugador como de la IA, donde deben apuntar.
+	void AimAt(FVector HitLocation);
 	
 	
 };
