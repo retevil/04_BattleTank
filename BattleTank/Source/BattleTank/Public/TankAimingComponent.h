@@ -27,5 +27,8 @@ public:
 	//En esta funcion le decimos a los tanques, tanto del jugador como de la IA, donde deben apuntar.
 	void AimAt(FVector HitLocation);
 		
-	
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+private:
+	UStaticMeshComponent* Barrel = nullptr;
+
 };
