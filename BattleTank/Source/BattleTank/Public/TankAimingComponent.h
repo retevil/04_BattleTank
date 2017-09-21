@@ -25,7 +25,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	//En esta funcion le decimos a los tanques, tanto del jugador como de la IA, donde deben apuntar.
-	void AimAt(FVector HitLocation);
+	void AimAt(FVector HitLocation, float LaunchSpeed);
 		
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 private:
