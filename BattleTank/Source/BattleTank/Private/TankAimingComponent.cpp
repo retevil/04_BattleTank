@@ -34,9 +34,15 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 	// ...
 }
+
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+{
+	Barrel = BarrelToSet;
+}
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	auto TankName =GetOwner()->GetName();
+	
 	//auto BarrelLocation = Barrel->GetComponentLocation().ToString();
 	//UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s from %s at %f"), *TankName, *HitLocation.ToString(),*BarrelLocation,LaunchSpeed);
 	FVector OutLaunchVelocity;
@@ -49,19 +55,22 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 				StartLocation,
 				HitLocation,
 				LaunchSpeed,
-				false,
-				0.f,
-				0.f,
 				ESuggestProjVelocityTraceOption::DoNotTrace
 			)
 		)
 	{
+		auto TankName = GetOwner()->GetName();
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("%s is aiming at %s"),*TankName,*AimDirection.ToString());
+		MoveBarrelTowards(AimDirection);
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	Barrel = BarrelToSet;
+	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotation = AimDirection.Rotation();
+	auto DeltaRotation = AimAsRotation - BarrelRotation;
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator:%s"), *DeltaRotation.ToString());
 }
+
+
