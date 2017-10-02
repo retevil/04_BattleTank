@@ -3,16 +3,14 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
+#include "Tank.h"
+#include "TankAimingComponent.h"
 
 #define OUT
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	//Las siguientes lineas crean un puntero hacia el tanque que controla el jugador y luego comprobamos
-	//que verdaderamente el jugador controla un tanque.
-	
 
 }
 
