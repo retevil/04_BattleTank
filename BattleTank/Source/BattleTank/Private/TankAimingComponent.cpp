@@ -49,10 +49,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	
 	bool ProjectileVelocity = UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace);
+	
 	if (ProjectileVelocity){
 	auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 	MoveBarrelTowards(AimDirection);
-	//RotateTurret(AimDirection);
 	}
 	
 }
