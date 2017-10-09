@@ -44,16 +44,15 @@ void ATank::SetTurretReference(UTurret * TurretToSet)
 }
 
 void ATank::Fire()
-{
-	UE_LOG(LogTemp, Warning, TEXT("IM FIRING MA LASER"));
-	
+{	
 	if (!Barrel) { return; }
 	if (!ProjectileBlueprint) { return; }
 	auto ProjectileSpawnPoint = Barrel->GetSocketLocation(FName("Projectile"));
 	auto ProjectileSpawnRotator = Barrel->GetSocketRotation(FName("Projectile"));
 	//Spawn a projectile at the socket location on the barrel.
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, ProjectileSpawnPoint, ProjectileSpawnRotator);
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, ProjectileSpawnPoint, ProjectileSpawnRotator);
 	
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
 
 void ATank::AimAt(FVector HitLocation)

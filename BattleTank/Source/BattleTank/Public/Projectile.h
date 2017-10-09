@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
+class UTankProjectileMovementComponent;
 
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
@@ -19,10 +20,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UTankProjectileMovementComponent* ProjectileMovementComponent;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	
+	void LaunchProjectile(float Speed);
 	
 };
