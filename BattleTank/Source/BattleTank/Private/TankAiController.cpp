@@ -13,23 +13,17 @@ void ATankAiController::BeginPlay()
 void ATankAiController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetPlayerTank()){
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto AITank= Cast<ATank>(GetPawn());
+	if (PlayerTank){		
 	//TODO Move Towards the player.
 	
 	//Aim towards the player.
-	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+	AITank->AimAt(PlayerTank->GetActorLocation());
+	
 	//Fire if ready.
+	AITank->Fire();
 	}
 }
 
-
-ATank* ATankAiController::GetControlledTank()
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* ATankAiController::GetPlayerTank()
-{
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-}
 
