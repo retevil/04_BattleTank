@@ -33,14 +33,14 @@ private:
 	bool GetLockVectorHitLocation(FVector &HitLocation, FVector StartPoint);
 
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = 0.5f;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairYLocation = 0.33333f;
 	
 	//En esta variable damos la distancia que queremos a nuestra linea imaginaria.
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
 
 	
