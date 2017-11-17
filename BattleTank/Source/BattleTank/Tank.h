@@ -9,7 +9,7 @@ class UTankBarrel;
 class UTankAimingComponent;
 class UTurret;
 class AProjectile;
-class UTankMovementComponent;
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -24,10 +24,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
+	UTankAimingComponent * TankAimingComponent;
 public:	
 
 	// Called to bind functionality to input
@@ -54,8 +51,6 @@ private:
 	float ReloadTimeInSeconds = 3;
 
 	UTankBarrel* Barrel = nullptr;
-	
-	
 
 	double LastFireTime= 0;
 };
