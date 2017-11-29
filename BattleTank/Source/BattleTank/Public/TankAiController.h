@@ -18,7 +18,7 @@ class BATTLETANK_API ATankAiController : public AAIController
 	
 private:
 
-	float AcceptanceRadius = 3000;
+	float AcceptanceRadius = 300;
 	void BeginPlay() override;
 
 public:
