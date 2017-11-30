@@ -28,7 +28,12 @@ void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, boo
 {
 	auto TankForwardDirection = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+	
 	auto TankFinalDirection = FVector::DotProduct(AIForwardIntention, TankForwardDirection);
 	IntendMoveForward(TankFinalDirection);
+	
+	auto TankFinalRotation = FVector::CrossProduct(TankForwardDirection,AIForwardIntention).Z;
+	UE_LOG(LogTemp, Warning, TEXT("TankFinalRotation is %f"), TankFinalRotation);
+	IntendTurnRight(TankFinalRotation);
 }
 
