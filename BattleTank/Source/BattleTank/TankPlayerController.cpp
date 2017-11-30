@@ -21,7 +21,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrossAir();
 }
 
-ATank* ATankPlayerController::GetControlledTank()
+ATank* ATankPlayerController::GetControlledTank() const
 {
 	//Aqui casteamos el componente tank del player controller y devolvemos el pawn del mismo.
 	return Cast<ATank>(GetPawn());
