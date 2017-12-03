@@ -16,6 +16,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	UE_LOG(LogTemp, Warning, TEXT("51531237:Tank_C++_Constructor"));
+	
 }
 
 // Called when the game starts or when spawned
@@ -23,13 +24,13 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("51531237:Tank_C++_BeginPlay"));
-	
+	Barrel = FindComponentByClass<UTankBarrel>();
 }
 
 void ATank::Fire()
 {	
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (Barrel && isReloaded) 
+	if (ensure (Barrel) && (isReloaded)) 
 	{
 		auto ProjectileSpawnPoint = Barrel->GetSocketLocation(FName("Projectile"));
 		auto ProjectileSpawnRotator = Barrel->GetSocketRotation(FName("Projectile"));
@@ -44,7 +45,7 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!FindComponentByClass<UTankAimingComponent>()) { return; }
+	if (!ensure (FindComponentByClass<UTankAimingComponent>())) { return; }
 	FindComponentByClass<UTankAimingComponent>()->AimAt(HitLocation,LaunchSpeed);
 
 }
