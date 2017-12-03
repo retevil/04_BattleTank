@@ -23,6 +23,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("51531237:Tank_C++_BeginPlay"));
+	
 }
 
 void ATank::Fire()
@@ -43,6 +44,7 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!Barrel) { return; }
-	TankAimingComponent->AimAt(HitLocation,LaunchSpeed);
+	if (!FindComponentByClass<UTankAimingComponent>()) { return; }
+	FindComponentByClass<UTankAimingComponent>()->AimAt(HitLocation,LaunchSpeed);
+
 }

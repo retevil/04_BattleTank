@@ -11,7 +11,9 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (!AimingComponent) { UE_LOG(LogTemp, Warning, TEXT("PlayerController can't find AimingComponent at BeginPlay")); return; }
+	FoundAimingComponent(AimingComponent);
 }
 
 // Called every frame
