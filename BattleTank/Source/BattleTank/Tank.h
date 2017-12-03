@@ -27,22 +27,15 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent * TankAimingComponent;
 public:	
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;	
-
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable)
-	void SetBarrelReference(UTankBarrel*BarrelToSet);
-
-	UFUNCTION(BlueprintCallable)
-		void SetTurretReference(UTurret*TurretToSet);
-	
-	UFUNCTION(BlueprintCallable)
-		void Fire();
+	void Fire();
 private:
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+
+	UTankBarrel* Barrel = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 	
 	UPROPERTY(EditDefaultsOnly, Category="Firing")
@@ -50,8 +43,6 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
-
-	UTankBarrel* Barrel = nullptr;
 
 	double LastFireTime= 0;
 };
