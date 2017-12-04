@@ -20,7 +20,8 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	Barrel = FindComponentByClass<UTankBarrel>();
 }
 
 void ATank::Fire()
@@ -41,5 +42,5 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	
+	TankAimingComponent->AimAt(HitLocation,LaunchSpeed);
 }
