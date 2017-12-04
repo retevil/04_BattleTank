@@ -8,7 +8,6 @@
 #include "TankPlayerController.generated.h"
 
 class UTankAimingComponent;
-class ATank;
 
 /**
  * 
@@ -21,12 +20,10 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		ATank* GetControlledTank() const;
 	//Con esta UFUNCTION hacemos que esta funcion salga en blueprint como un evento, como por ejemplo BeginPlay()
 	//No hace falta implementación.
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
-		void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
+	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
 private:
 	//En esta funcion pasamos el valor del HitLocation, es decir, donde choca nuestra linea imaginaria a la funcion AimAt de la clase Tank, para poder usarla al apuntar.
 	void AimTowardsCrossAir();

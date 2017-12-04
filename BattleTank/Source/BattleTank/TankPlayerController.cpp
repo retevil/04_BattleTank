@@ -3,7 +3,6 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
-#include "Tank.h"
 #include "TankAimingComponent.h"
 
 #define OUT
@@ -11,7 +10,7 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	auto AimingComponent = GetPawn()->FindComponentByClass < UTankAimingComponent>();
 	if (!ensure (AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
 }
@@ -23,22 +22,15 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrossAir();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	//Aqui casteamos el componente tank del player controller y devolvemos el pawn del mismo.
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimTowardsCrossAir()
 {
-	ATank* PlayerTank = GetControlledTank();
-	if (!ensure(PlayerTank)) { return; }
+	auto PlayerTankAimingComponent = GetPawn()->FindComponentByClass < UTankAimingComponent>();
+	if (!ensure(PlayerTankAimingComponent)) { return; }
 	FVector HitLocation;
 
 	if (GetSightRayHitLocation(HitLocation)) 
 	{	
-		PlayerTank->AimAt(HitLocation);
-		
+		PlayerTankAimingComponent->AimAt(HitLocation);
 	}
 }
 
