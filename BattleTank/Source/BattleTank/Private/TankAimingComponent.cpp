@@ -25,8 +25,8 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
+	//Con esto el primer disparo se hara despues del tiempo de recarga
+	LastFireTime = FPlatformTime::Seconds();
 	
 }
 
@@ -35,7 +35,10 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	if((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds)
+	{
+		FiringStatus = EFiringStatus::Locked;
+	}
 	// ...
 }
 
@@ -74,9 +77,11 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (ensure(Barrel) && (isReloaded) && ensure(ProjectileBlueprint))
+	
+	if (FiringStatus!=EFiringStatus::Reloading)
 	{
+		if (!ensure(Barrel)) { return; }
+		if (!ensure(ProjectileBlueprint)) { return; }
 		auto ProjectileSpawnPoint = Barrel->GetSocketLocation(FName("Projectile"));
 		auto ProjectileSpawnRotator = Barrel->GetSocketRotation(FName("Projectile"));
 		//Spawn a projectile at the socket location on the barrel.
