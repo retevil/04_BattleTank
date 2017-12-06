@@ -44,7 +44,4 @@ private:
 	//En esta variable damos la distancia que queremos a nuestra linea imaginaria.
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
-
-	
-
 };

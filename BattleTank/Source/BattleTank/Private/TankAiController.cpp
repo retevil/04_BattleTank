@@ -21,9 +21,8 @@ void ATankAiController::Tick(float DeltaTime)
 	MoveToActor(PlayerTank,AcceptanceRadius);
 	//Aim towards the player.
 	AITankAimingComponent->AimAt(PlayerTank->GetActorLocation());
-	
-	//TODO Fire if ready.
-	
+	//Fire if ready.
+	AITankAimingComponent->Fire();
 	}
 }
 
